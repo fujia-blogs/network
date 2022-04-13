@@ -16,34 +16,10 @@ const server = http.createServer((req, res) => {
       'Access-Control-Allow-Headers': '*',
       'Access-Control-Allow-Methods': 'PUT,DELETE,PATCH',
       'Content-Type': 'text/html',
+      'Set-Cookie': ['token=123456;max-age=2', 'id=789'],
     });
 
     res.end(html);
-  }
-
-  if (req.url === '/script.js') {
-    const etag = req.headers['if-none-match'];
-
-    if (etag === '666') {
-      res.writeHead(304, {
-        'Content-Type': 'text/javascript',
-        'Cache-Control': 'max-age=200000,no-cache',
-        'Last-Modified': '123',
-        Etag: '666',
-      });
-
-      res.end('');
-      return;
-    }
-
-    res.writeHead(200, {
-      'Content-Type': 'text/javascript',
-      'Cache-Control': 'max-age=200000,no-cache',
-      'Last-Modified': '123',
-      Etag: '666',
-    });
-
-    res.end('console.log("loaded 2")');
   }
 });
 
