@@ -1,10 +1,10 @@
 const http = require('http');
 const fs = require('fs');
-const zlib = require('zlib');
+// const zlib = require('zlib');
 
 const port = '3006';
 
-const html = fs.readFileSync('./index.html');
+const html = fs.readFileSync('./index.html', 'utf-8');
 // console.log(html);
 
 const server = http.createServer((req, res) => {
@@ -16,11 +16,12 @@ const server = http.createServer((req, res) => {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Headers': '*',
       'Access-Control-Allow-Methods': 'PUT,DELETE,PATCH',
-      'Content-Type': 'text/html',
-      'Set-Cookie': ['token=123456;max-age=2', 'id=789'],
+      'Content-Type': 'text/html;charset=utf-8',
+      // 'Content-Security-Policy': 'default-src http: https:',
+      'Content-Security-Policy': 'default-src "self"',
     });
 
-    res.end(zlib.gzipSync(html));
+    res.end(html);
   }
 });
 
