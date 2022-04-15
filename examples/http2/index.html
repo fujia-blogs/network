@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HTTP</title>
+  </head>
+  <body>
+    <h1>Nginx</h1>
+    <div>data is: <span id="data"></span></div>
+    <div><button id="btn">Click</button></div>
+    <script>
+      var index = 0;
+      const dataEle = document.getElementById('data');
+      function request() {
+        dataEle.innerText = '';
+        fetch('/data', {
+          headers: {
+            'X-Test-Cache': index++,
+          },
+        })
+          .then(function (res) {
+            return res.text();
+          })
+          .then(function (text) {
+            dataEle.innerText = text;
+          });
+      }
+      document.getElementById('btn').addEventListener('click', request, false);
+    </script>
+  </body>
+</html>
